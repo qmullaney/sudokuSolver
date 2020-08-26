@@ -21,16 +21,7 @@ public:
 
 void inputGrid();
 
-void printGrid(Grid& myGrid){
-  for(int i = 0; i< 9; i++){
-    cout << endl;
-    for(int j = 0; j<9; j++){
-      int theout = myGrid.getNum(i,j);
-      cout << theout << ", ";
-    }
-  }
-}
-
+//checks for number in row
 bool checkHorizontal(Grid& myGrid, int myM, int myNum){
   for(int i = 0; i < 9; i++){
     if(myGrid.getNum(myM, i) == myNum){
@@ -39,6 +30,7 @@ bool checkHorizontal(Grid& myGrid, int myM, int myNum){
   }
   return false;
 }
+//checks for number in colemn
 bool checkVertical(Grid& myGrid, int myN, int myNum){
   for(int i = 0; i < 9; i++){
     if(myGrid.getNum(i, myN) == myNum){
@@ -47,12 +39,15 @@ bool checkVertical(Grid& myGrid, int myN, int myNum){
   }
   return false;
 }
+
+//combines checkVertical and checkHorizontal
 bool checkPerp(Grid& myGrid, int myM, int myN, int myNum){
   if(checkHorizontal(myGrid, myM, myNum) || checkVertical(myGrid, myN, myNum)){
     return true;
   }
   return false;
 }
+//checks the 3x3 block for number
 bool checkBlock(Grid& myGrid, int myM, int myN, int myNum){
   int m = myM/3;//makes sure to start on the first of the chunk
   int n = myN/3;
@@ -67,7 +62,8 @@ bool checkBlock(Grid& myGrid, int myM, int myN, int myNum){
 }
 
 
-
+//slighly harder method to do by hand
+//checks if open square can only contain one number
 bool noOtherNumber(Grid& myGrid){
   //cout <<"ran noOtherNum"<<endl;
   bool updated = false;
@@ -107,6 +103,9 @@ bool noOtherNumber(Grid& myGrid){
   return finished;
 }
 
+//easiest method to do by hand
+//checks 3x3 blocks for a single spot for a number
+//if it finds 2 available spots, it moves on to a new number
 bool IntuitiveSolve(Grid& myGrid){
   //cout <<"ran intuitive solve"<<endl;
   bool updated = false;
@@ -155,6 +154,8 @@ bool IntuitiveSolve(Grid& myGrid){
   }while(updated);
  return finished;
 }
+
+
 void displayGrid(Grid& myGrid, int myI, int myJ){
   if (system("CLS")) system("clear");
   cout <<"--------------------------"<<endl;
@@ -319,7 +320,8 @@ int main() {
 
   }
 
-  //displayGrid(thegrid, -1,-1);
+//stores my class grid in a 2x2 array, because thats how the bactracking alorithm was programed
+
   int grid[9][9];
   for (size_t i = 0; i < 9; i++) {
     for (size_t j = 0; j < 9; j++) {
@@ -332,6 +334,9 @@ int main() {
       else
           cout << "No solution exists";
 
+
+//puts solved 2d array into grid class
+//this is so i can use my displayGrid, which only works on the grid class 
   for (size_t i = 0; i < 9; i++) {
     for (size_t j = 0; j < 9; j++) {
 
